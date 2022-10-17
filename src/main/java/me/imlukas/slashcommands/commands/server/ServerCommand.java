@@ -1,27 +1,22 @@
-package me.imlukas.command.commands.server;
+package me.imlukas.slashcommands.commands.server;
 
-import me.imlukas.command.CommandContext;
-import me.imlukas.command.ICommand;
+import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommandContext;
+import me.imlukas.slashcommands.annotations.SlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
-public class ServerCommand implements ICommand {
-    @Override
-    public List<String> getAliases() {
-        return List.of("server", "guild");
-    }
+public class ServerCommand implements ISlashCommand {
 
-    @Override
-    public void handle(CommandContext ctx) {
-        User author = ctx.getAuthor();
+    @SlashCommand
+    public void run(SlashCommandContext ctx) {
         TextChannel channel = ctx.getTextChannel();
         Guild guild = ctx.getGuild();
         Member guildOwner = guild.getOwner();
@@ -60,17 +55,14 @@ public class ServerCommand implements ICommand {
 
         channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
-
-
     }
-
     @Override
     public String getName() {
         return "server";
     }
 
     @Override
-    public String getHelp() {
-        return "Displays the server info";
+    public String getDescription() {
+        return "Shows the server information.";
     }
 }

@@ -1,7 +1,6 @@
 package me.imlukas;
 
-import me.imlukas.listeners.EnterLeaveListener;
-import me.imlukas.listeners.MessageListener;
+import me.imlukas.listeners.*;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -18,13 +17,13 @@ public class Bot {
 
     private final ShardManager shardManager;
 
+
     public Bot() throws  LoginException{
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(TOKEN)
                 .setActivity(Activity.listening("your commands"))
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS)
                 .enableCache(CacheFlag.ONLINE_STATUS)
-                .addEventListeners(new MessageListener())
-                .addEventListeners(new EnterLeaveListener())
+                .addEventListeners(new EnterLeaveListener(), new GuildJoinReadyListener(), new SlashCommandListener())
                 .setMemberCachePolicy(MemberCachePolicy.ALL);
 
         shardManager = builder.build();

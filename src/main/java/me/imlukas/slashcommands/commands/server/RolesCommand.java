@@ -1,7 +1,8 @@
-package me.imlukas.command.commands.server;
+package me.imlukas.slashcommands.commands.server;
 
-import me.imlukas.command.CommandContext;
-import me.imlukas.command.ICommand;
+import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.ISlashCommandCtx;
+import me.imlukas.slashcommands.annotations.SlashCommand;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -11,20 +12,15 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 import java.util.List;
 
-public class RolesCommand implements ICommand {
+public class RolesCommand implements ISlashCommand {
 
-    @Override
-    public List<String> getAliases() {
-        return List.of("roles", "seeroles");
-    }
-
-    @Override
-    public void handle(CommandContext ctx) {
+    @SlashCommand
+    public void run(ISlashCommandCtx ctx) {
         Guild guild = ctx.getGuild();
         TextChannel textChannel = ctx.getTextChannel();
         List<Role> roleList = guild.getRoles();
         MessageCreateBuilder messageCreateBuilder = new MessageCreateBuilder();
-        for (Role role : roleList){
+        for (Role role : roleList) {
 
             String roleAsMention = role.getAsMention();
             String roleID = role.getId();
@@ -42,7 +38,7 @@ public class RolesCommand implements ICommand {
     }
 
     @Override
-    public String getHelp() {
-        return "see all the server roles";
+    public String getDescription() {
+        return "Get a list of roles";
     }
 }

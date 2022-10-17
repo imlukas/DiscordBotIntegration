@@ -1,19 +1,23 @@
-package me.imlukas.command;
+package me.imlukas.slashcommands;
 
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.sharding.ShardManager;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.*;
 
-public interface ICommandCtx {
+public interface ISlashCommandCtx {
 
     default Guild getGuild() {
         return this.getEvent().getGuild();
     }
 
-    MessageReceivedEvent getEvent();
+    SlashCommandInteractionEvent getEvent();
     default Channel getChannel(){
         return this.getEvent().getChannel();
     }
@@ -21,12 +25,12 @@ public interface ICommandCtx {
         return this.getEvent().getChannel().asTextChannel();
     }
 
-    default Message getMessage() {
-        return this.getEvent().getMessage();
+    default String getName() {
+        return this.getEvent().getName();
     }
 
-    default User getAuthor() {
-        return this.getEvent().getAuthor();
+    default User getUser() {
+        return this.getEvent().getUser();
     }
 
     default Member getMember() {
