@@ -1,2 +1,2 @@
-# Venux discord bot
+# Verux discord bot
 Utility discord bot, made for a school project :).
