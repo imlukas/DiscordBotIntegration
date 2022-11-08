@@ -3,6 +3,7 @@ package me.imlukas.slashcommands.commands.server;
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.SlashCommand;
+import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
@@ -15,7 +16,7 @@ import java.time.OffsetDateTime;
 
 public class ServerCommand implements ISlashCommand {
 
-    @SlashCommand
+    @SlashCommandHandler
     public void run(SlashCommandContext ctx) {
         TextChannel channel = ctx.getTextChannel();
         Guild guild = ctx.getGuild();
@@ -63,6 +64,6 @@ public class ServerCommand implements ISlashCommand {
 
     @Override
     public String getDescription() {
-        return "Shows the server information.";
+        return "Shows the server information";
     }
 }

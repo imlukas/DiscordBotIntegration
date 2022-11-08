@@ -3,6 +3,7 @@ package me.imlukas.slashcommands.commands.server;
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.ISlashCommandCtx;
 import me.imlukas.slashcommands.annotations.SlashCommand;
+import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class RolesCommand implements ISlashCommand {
 
-    @SlashCommand
+    @SlashCommandHandler
     public void run(ISlashCommandCtx ctx) {
         Guild guild = ctx.getGuild();
         TextChannel textChannel = ctx.getTextChannel();
@@ -39,6 +40,6 @@ public class RolesCommand implements ISlashCommand {
 
     @Override
     public String getDescription() {
-        return "Get a list of roles";
+        return "Get a list of the available roles";
     }
 }

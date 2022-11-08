@@ -4,6 +4,7 @@ import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommand;
+import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class UnbanSlashCommand implements ISlashCommand {
 
-    @SlashCommand
+    @SlashCommandHandler
     public void run(@Option(name = "user", description = "User to unban", type = OptionType.USER, required = true) User banUser,
                     @Option(name = "reason", description = "Reason for ban") String reason,
                     SlashCommandContext ctx) {

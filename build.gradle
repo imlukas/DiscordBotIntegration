@@ -15,9 +15,12 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor('org.projectlombok:lombok:1.18.24')
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation("net.dv8tion:JDA:5.0.0-alpha.21")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.22")
+    implementation 'commons-io:commons-io:2.5'
     implementation group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.1'
     implementation group: 'me.duncte123', name: 'botCommons', version: '2.3.14'
 }

@@ -13,8 +13,11 @@ import java.lang.annotation.Target;
 public @interface Option {
 
     String name() default "";
+
     String description() default "";
+
     OptionType type() default OptionType.STRING;
+
     boolean required() default false;
 
 }
