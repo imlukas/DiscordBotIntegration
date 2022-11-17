@@ -1,12 +1,13 @@
 package me.imlukas.utils;
 
 public class XpUtil {
-    
+
     private static final float EXPONENT = 0.2f;
 
 
     /**
      * Gets the level based on the xp.
+     *
      * @param xp the xp to get the level from.
      * @return current level of the user, based on their XP.
      */
@@ -29,7 +30,7 @@ public class XpUtil {
     /**
      * Calculates the amount of xp needed to reach a specific level.
      *
-     * @param xp the xp that the user has.
+     * @param xp    the xp that the user has.
      * @param level the specified level to know the xp for.
      * @return the amount of xp needed to reach specified level.
      */
@@ -45,7 +46,7 @@ public class XpUtil {
      * @return the xp needed to reach the level.
      */
     public static int getLevelXp(double level) {
-        return (int) Math.floor(Math.pow((level / EXPONENT ), 2));
+        return (int) Math.floor(Math.pow((level / EXPONENT), 2));
     }
 
 

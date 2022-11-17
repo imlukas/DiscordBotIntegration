@@ -5,10 +5,8 @@ import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.interactions.components.selections.SelectMenu;
 import net.dv8tion.jda.api.utils.MarkdownUtil;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,7 +19,7 @@ public class RockPaperScissorCommand implements ISlashCommand {
 
     @SlashCommandHandler
     public void run(@Option(name = "choice", description = "Your choice", required = true) String choice,
-                     SlashCommandContext ctx) {
+                    SlashCommandContext ctx) {
         List<String> choices = List.of("rock", "paper", "scissor");
 
         int userChoice = choices.indexOf(choice);
@@ -38,17 +36,17 @@ public class RockPaperScissorCommand implements ISlashCommand {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(EMBED_PURPLE);
 
-        if(userChoice == botChoice) {
+        if (userChoice == botChoice) {
             embedBuilder.setTitle("It's a tie!");
             ctx.getEvent().replyEmbeds(embedBuilder.build()).queue();
             return;
         }
-        if(diff == 1 || diff == -2) {
+        if (diff == 1 || diff == -2) {
             embedBuilder.setTitle("You won!");
         } else {
             embedBuilder.setTitle("You Lost!");
         }
-        embedBuilder.setDescription("You chose: " +  MarkdownUtil.bold(choices.get(userChoice)) +
+        embedBuilder.setDescription("You chose: " + MarkdownUtil.bold(choices.get(userChoice)) +
                 "\nI choose: " + MarkdownUtil.bold(choices.get(botChoice)));
         ctx.getEvent().replyEmbeds(embedBuilder.build()).queue();
     }

@@ -32,13 +32,14 @@ public class XpCommand implements ISlashCommand {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("XP");
         builder.setDescription("Your XP: " + xp);
-        builder.addField("Level", "" +  XpUtil.getLevelFromXp(xp), true);
+        builder.addField("Level", "" + XpUtil.getLevelFromXp(xp), true);
         builder.addField("XP to next level", "" + XpUtil.getXpNeededForLevel(xp), true);
         builder.setColor(Colors.EMBED_PURPLE);
 
         ctx.getEvent().replyEmbeds(builder.build()).queue();
 
     }
+
     @SubCommand(name = "give", description = "Give xp to a user")
     public void give(@Option(name = "user", description = "The user to give xp to", type = OptionType.USER) User user,
                      @Option(name = "amount", description = "The amount of xp to give", type = OptionType.INTEGER) int amount,
@@ -48,6 +49,7 @@ public class XpCommand implements ISlashCommand {
         ctx.getEvent().reply("Gave " + amount + " xp to " + user.getAsTag()).queue();
         // TODO
     }
+
     @SubCommand(name = "xpneeded", description = "View your xp")
     public void xpNeeded(@Option(name = "level", description = "The level you want to know the xp for", required = true, type = OptionType.INTEGER) int level,
                          SlashCommandContext ctx) {

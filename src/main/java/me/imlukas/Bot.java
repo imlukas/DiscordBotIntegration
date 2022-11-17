@@ -3,7 +3,9 @@ package me.imlukas;
 import lombok.Getter;
 import me.imlukas.database.mysql.impl.SQLHandler;
 import me.imlukas.database.mysql.impl.SQLSetup;
-import me.imlukas.listeners.*;
+import me.imlukas.listeners.EnterLeaveListener;
+import me.imlukas.listeners.GuildJoinReadyListener;
+import me.imlukas.listeners.SlashCommandListener;
 import me.imlukas.slashcommands.SlashCommandManager;
 import me.imlukas.slashcommands.commands.admin.AdminCommand;
 import me.imlukas.slashcommands.commands.fun.CatCommand;
@@ -35,7 +37,7 @@ public class Bot {
     private final SQLSetup sqlSetup;
     private final SQLHandler sqlHandler;
 
-    public Bot() throws  LoginException{
+    public Bot() throws LoginException {
         sqlSetup = new SQLSetup(this, "db4free.net", "mobkilltrade", "putolukas", "mobkilltrade", 3306);
         sqlHandler = new SQLHandler(this);
         slashCommandManager = new SlashCommandManager();
@@ -49,10 +51,9 @@ public class Bot {
         shardManager = builder.build();
 
 
-
     }
 
-    private void registerCommands(){
+    private void registerCommands() {
         slashCommandManager.registerCommand(new BanSlashCommand());
         slashCommandManager.registerCommand(new UnbanSlashCommand());
         slashCommandManager.registerCommand(new AvatarCommand());
@@ -65,9 +66,10 @@ public class Bot {
         slashCommandManager.registerCommand(new AdminCommand(this));
     }
 
-    public ShardManager getShardManager(){
+    public ShardManager getShardManager() {
         return this.shardManager;
     }
+
     public static void main(String[] args) {
         try {
             Bot bot = new Bot();

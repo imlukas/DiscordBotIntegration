@@ -16,7 +16,7 @@ public class CatCommand implements ISlashCommand {
 
     @SneakyThrows
     @SlashCommandHandler()
-    public void run(@Option(name="breed", description="The breed of cat you want to see") String breed,
+    public void run(@Option(name = "breed", description = "The breed of cat you want to see") String breed,
                     SlashCommandContext ctx) {
         String sURL = "https://api.thecatapi.com/v1/images/search";
         if (breed != null) {
@@ -25,7 +25,7 @@ public class CatCommand implements ISlashCommand {
         }
         JSONObject json = JSONParser.getJsonObject(new URL(sURL));
 
-        if (json == null){
+        if (json == null) {
             ctx.getEvent().reply(":x: Something went wrong! \nMake sure you put a correct breed.").setEphemeral(true).queue();
             return;
         }
@@ -39,6 +39,7 @@ public class CatCommand implements ISlashCommand {
         embed.setImage(catImage);
         ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();
     }
+
     @Override
     public String getName() {
         return "cat";

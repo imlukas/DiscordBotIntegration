@@ -4,13 +4,6 @@ import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import me.imlukas.slashcommands.annotations.SubCommand;
-import me.imlukas.slashcommands.commands.fun.DogCommand;
-import me.imlukas.slashcommands.commands.fun.RockPaperScissorCommand;
-import me.imlukas.slashcommands.commands.member.AvatarCommand;
-import me.imlukas.slashcommands.commands.member.BanSlashCommand;
-import me.imlukas.slashcommands.commands.member.UnbanSlashCommand;
-import me.imlukas.slashcommands.commands.server.RolesCommand;
-import me.imlukas.slashcommands.commands.server.ServerCommand;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -74,7 +67,7 @@ public class SlashCommandManager {
                     continue;
                 }
                 // Handle main command method's options
-                if (method.isAnnotationPresent(SlashCommandHandler.class)){
+                if (method.isAnnotationPresent(SlashCommandHandler.class)) {
                     for (Parameter parameter : parameters) {
                         if (parameter.isAnnotationPresent(Option.class)) {
                             optionAnnotations.add(parameter.getAnnotation(Option.class));
@@ -169,7 +162,6 @@ public class SlashCommandManager {
         Map<String, Object> options = new HashMap<>();
 
         event.getOptions().forEach(option -> options.put(option.getName(), OptionTypeWrapper.fromType(option.getType()).get(option)));
-
 
 
         Class<?> clazz = command.getClass();

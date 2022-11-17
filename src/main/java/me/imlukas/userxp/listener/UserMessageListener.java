@@ -32,7 +32,7 @@ public class UserMessageListener extends ListenerAdapter {
         main.getSqlHandler().addXp(event.getGuild(), xp, user);
         int playerXp = main.getSqlHandler().getXp(event.getGuild(), user).join();
 
-        if (playerXp >  XpUtil.getLevelXp(XpUtil.getLevelFromXp(playerXp))) {
+        if (playerXp > XpUtil.getLevelXp(XpUtil.getLevelFromXp(playerXp))) {
             event.getChannel().sendMessage("You leveled up to level " + XpUtil.getLevelFromXp(playerXp)).queue();
         }
 

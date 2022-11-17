@@ -21,18 +21,18 @@ public class SQLHandler {
         this.connection = main.getSqlSetup().get();
     }
 
-    public String getTable(Guild guild){
+    public String getTable(Guild guild) {
         return "server_" + guild.getId();
     }
 
-    public void addXp(Guild guild, int xp, User user){
+    public void addXp(Guild guild, int xp, User user) {
         long userId = user.getIdLong();
 
         getXp(guild, user).thenCompose((oldXp) -> {
             int newXp = oldXp + xp;
             try {
                 PreparedStatement statement = connection.prepareStatement(UPDATE_XP.replaceFirst("\\?", "server_" + guild.getId()));
-                statement.setInt(1,  newXp);
+                statement.setInt(1, newXp);
                 statement.setLong(2, userId);
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class SQLHandler {
         });
     }
 
-    public void wipeUser(Guild guild, long id){
+    public void wipeUser(Guild guild, long id) {
         CompletableFuture.runAsync(() -> {
             try {
                 PreparedStatement statement = connection.prepareStatement(WIPE_USER.replaceFirst("\\?", getTable(guild)));
@@ -54,11 +54,11 @@ public class SQLHandler {
         });
     }
 
-    public void wipeTable(){
+    public void wipeTable() {
         //TODO
     }
 
-    public void getXpOrdered(int entries, OrderType orderType){
+    public void getXpOrdered(int entries, OrderType orderType) {
         //TODO
     }
 
