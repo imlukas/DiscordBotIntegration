@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import okhttp3.OkHttpClient;
 
 public class AdminCommand implements ISlashCommand {
     private final Bot main;
@@ -18,16 +19,15 @@ public class AdminCommand implements ISlashCommand {
     }
 
     @SubCommand(name = "terminate", description = "terminates the bot")
-    public void shutdown() {
+    public void shutdown(){
         main.getShardManager().shutdown();
     }
 
 
     @SubCommand(name = "wipe", description = "terminates the bot")
-    public void wipe(@Option(name = "user", description = "The user to wipe", type = OptionType.USER, required = true) User user, SlashCommandContext ctx) {
+    public void wipe(@Option(name = "user", description = "The user to wipe", type = OptionType.USER, required = true) User user, SlashCommandContext ctx){
         main.getSqlHandler().wipeUser(ctx.getGuild(), user.getIdLong());
     }
-
     @Override
     public String getName() {
         return "admin";

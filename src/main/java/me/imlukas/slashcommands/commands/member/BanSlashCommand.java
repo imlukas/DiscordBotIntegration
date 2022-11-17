@@ -3,6 +3,7 @@ package me.imlukas.slashcommands.commands.member;
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
+import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -17,8 +18,8 @@ public class BanSlashCommand implements ISlashCommand {
 
     @SlashCommandHandler
     public void run(@Option(name = "user", description = "User to ban", type = OptionType.USER, required = true) User banUser,
-                    @Option(name = "reason", description = "Reason for ban") String reason,
-                    SlashCommandContext ctx) {
+                           @Option(name = "reason", description = "Reason for ban") String reason,
+                           SlashCommandContext ctx) {
         if (reason == null) {
             reason = "No reason provided";
         }
@@ -26,6 +27,7 @@ public class BanSlashCommand implements ISlashCommand {
         guild.ban(banUser, 0, TimeUnit.SECONDS).reason(reason).queue();
         guild.pruneMemberCache();
     }
+
 
 
     // TODO: have some fun with annotations to make command options.

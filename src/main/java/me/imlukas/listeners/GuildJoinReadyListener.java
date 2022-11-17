@@ -2,6 +2,7 @@ package me.imlukas.listeners;
 
 import me.imlukas.Bot;
 import me.imlukas.slashcommands.CommandType;
+import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.SlashCommandManager;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
@@ -11,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 public class GuildJoinReadyListener extends ListenerAdapter {
     private final Bot main;
     private final SlashCommandManager slashCommandManager;
-
     public GuildJoinReadyListener(Bot main) {
         this.main = main;
         slashCommandManager = main.getSlashCommandManager();

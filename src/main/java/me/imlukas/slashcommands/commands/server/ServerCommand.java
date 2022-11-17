@@ -2,12 +2,15 @@ package me.imlukas.slashcommands.commands.server;
 
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
+import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 
 import java.time.OffsetDateTime;
 
@@ -29,11 +32,11 @@ public class ServerCommand implements ISlashCommand {
         int totalRoles = guild.getRoles().size();
         int onlineMembers = 0;
 
-        for (Member member : guild.getMembers()) {
-            if (member.getOnlineStatus() == OnlineStatus.OFFLINE) {
+        for (Member member : guild.getMembers()){
+            if (member.getOnlineStatus() == OnlineStatus.OFFLINE){
                 continue;
             }
-            onlineMembers += 1;
+            onlineMembers+=1;
         }
 
 
@@ -43,8 +46,8 @@ public class ServerCommand implements ISlashCommand {
         embedBuilder.addField(":id: Server ID:", guildID, true);
         embedBuilder.addField(":calendar: Created on:", "<t:" + guildCreatedDate.toEpochSecond() + ":R>", true);
         embedBuilder.addField(":crown: Owned by:", guildOwner.getAsMention(), true);
-        embedBuilder.addField(":busts_in_silhouette: Members (" + totalMembers + ")", "Members Online: " + onlineMembers, true);
-        embedBuilder.addField(":speech_balloon: Channels (" + totalChannels + ")", textChannels + " Text | " + voiceChannels + " Voice", true);
+        embedBuilder.addField(":busts_in_silhouette: Members (" + totalMembers +")", "Members Online: " + onlineMembers, true);
+        embedBuilder.addField(":speech_balloon: Channels (" + totalChannels +")", textChannels + " Text | " + voiceChannels + " Voice" , true);
         embedBuilder.addField(":closed_lock_with_key: Roles (" + totalRoles + ")", "To see all the roles do /roles!", true);
 
         embedBuilder.build();
@@ -53,7 +56,6 @@ public class ServerCommand implements ISlashCommand {
         channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
     }
-
     @Override
     public String getName() {
         return "server";

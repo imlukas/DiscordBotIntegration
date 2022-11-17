@@ -3,10 +3,12 @@ package me.imlukas.slashcommands;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
 public interface ISlashCommandCtx {
@@ -16,11 +18,9 @@ public interface ISlashCommandCtx {
     }
 
     SlashCommandInteractionEvent getEvent();
-
-    default Channel getChannel() {
+    default Channel getChannel(){
         return this.getEvent().getChannel();
     }
-
     default TextChannel getTextChannel() {
         return this.getEvent().getChannel().asTextChannel();
     }

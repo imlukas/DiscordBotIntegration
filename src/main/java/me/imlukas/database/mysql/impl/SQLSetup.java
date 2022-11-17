@@ -1,16 +1,20 @@
 package me.imlukas.database.mysql.impl;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import me.imlukas.Bot;
 import me.imlukas.utils.SQLConnectionProvider;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 
 import static me.imlukas.database.mysql.impl.SQLQueries.ADD_USER;
 import static me.imlukas.database.mysql.impl.SQLQueries.CREATE_SERVER_TABLE;
@@ -51,7 +55,7 @@ public class SQLSetup extends SQLConnectionProvider {
         }
     }
 
-    public void setupServer(Guild guild) {
+    public void setupServer(Guild guild){
         createTable(guild);
         // Handle members
         List<Member> guildMembers = guild.getMembers();
@@ -65,7 +69,7 @@ public class SQLSetup extends SQLConnectionProvider {
 
     public void addUser(Guild guild, User user) {
 
-        System.out.println("Adding user " + user.getName() + " with ID: " + user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
+        System.out.println("Adding user " + user.getName() + " with ID: "+ user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
         long userID = user.getIdLong();
         CompletableFuture.runAsync(() -> {
             try {
@@ -75,13 +79,12 @@ public class SQLSetup extends SQLConnectionProvider {
                 preparedStatement.setString(2, user.getName());
 
                 preparedStatement.executeUpdate();
-                System.out.println("Added user " + user.getName() + " with ID: " + user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
+                System.out.println("Added user " + user.getName() + " with ID: "+ user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
             } catch (SQLException e) {
-                System.out.println("Failed to add user " + user.getName() + " with ID: " + user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
+                System.out.println("Failed to add user " + user.getName() + " with ID: "+ user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
             }
         });
     }
-
     public void createTable(Guild guild) {
         CompletableFuture.runAsync(() -> {
             try {

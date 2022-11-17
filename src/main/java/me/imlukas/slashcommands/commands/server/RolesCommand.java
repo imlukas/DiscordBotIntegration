@@ -2,6 +2,7 @@ package me.imlukas.slashcommands.commands.server;
 
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.ISlashCommandCtx;
+import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
