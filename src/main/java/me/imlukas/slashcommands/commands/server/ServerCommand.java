@@ -33,7 +33,6 @@ public class ServerCommand implements ISlashCommand {
         int onlineMembers = 0;
 
         for (Member member : guild.getMembers()){
-            System.out.println(member);
             if (member.getOnlineStatus() == OnlineStatus.OFFLINE){
                 continue;
             }

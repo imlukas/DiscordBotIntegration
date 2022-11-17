@@ -1,0 +1,73 @@
+package me.imlukas.slashcommands.commands.xp;
+
+import me.imlukas.Bot;
+import me.imlukas.database.mysql.impl.SQLHandler;
+import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommandContext;
+import me.imlukas.slashcommands.annotations.Option;
+import me.imlukas.slashcommands.annotations.SlashCommandHandler;
+import me.imlukas.slashcommands.annotations.SubCommand;
+import me.imlukas.utils.Colors;
+import me.imlukas.utils.XpUtil;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+
+public class XpCommand implements ISlashCommand {
+    private final SQLHandler sqlHandler;
+
+    public XpCommand(Bot main) {
+        this.sqlHandler = main.getSqlHandler();
+    }
+
+    @SlashCommandHandler
+    public void run(SlashCommandContext ctx) {
+        // TODO
+    }
+
+    @SubCommand(name = "view", description = "View your xp")
+    public void view(SlashCommandContext ctx) {
+        int xp = sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join();
+        System.out.println(XpUtil.getLevelFromXp(xp));
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle("XP");
+        builder.setDescription("Your XP: " + xp);
+        builder.addField("Level", "" +  XpUtil.getLevelFromXp(xp), true);
+        builder.addField("XP to next level", "" + XpUtil.getXpNeededForLevel(xp), true);
+        builder.setColor(Colors.EMBED_PURPLE);
+
+        ctx.getEvent().replyEmbeds(builder.build()).queue();
+
+    }
+    @SubCommand(name = "give", description = "Give xp to a user")
+    public void give(@Option(name = "user", description = "The user to give xp to", type = OptionType.USER) User user,
+                     @Option(name = "amount", description = "The amount of xp to give", type = OptionType.INTEGER) int amount,
+                     SlashCommandContext ctx) {
+
+        sqlHandler.addXp(ctx.getGuild(), amount, user);
+        ctx.getEvent().reply("Gave " + amount + " xp to " + user.getAsTag()).queue();
+        // TODO
+    }
+    @SubCommand(name = "xpneeded", description = "View your xp")
+    public void xpNeeded(@Option(name = "level", description = "The level you want to know the xp for", required = true, type = OptionType.INTEGER) int level,
+                         SlashCommandContext ctx) {
+
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle("Level " + level);
+        builder.addField("XP needed:", "" + XpUtil.getLevelXp(level), false);
+        builder.addField("You still need " + XpUtil.getXpNeededForLevel(sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join())
+                + " XP to reach level " + level, "", false);
+        builder.setColor(Colors.EMBED_PURPLE);
+        ctx.getEvent().replyEmbeds(builder.build()).queue();
+    }
+
+    @Override
+    public String getName() {
+        return "xp";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Xp commands";
+    }
+}

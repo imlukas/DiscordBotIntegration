@@ -10,8 +10,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class GuildJoinReadyListener extends ListenerAdapter {
+    private final Bot main;
     private final SlashCommandManager slashCommandManager;
     public GuildJoinReadyListener(Bot main) {
+        this.main = main;
         slashCommandManager = main.getSlashCommandManager();
     }
 
@@ -19,10 +21,13 @@ public class GuildJoinReadyListener extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         slashCommandManager.init(event.getGuild(), CommandType.GUILD);
+        main.getSqlSetup().setupServer(event.getGuild());
+
     }
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
         slashCommandManager.init(event.getGuild(), CommandType.GUILD);
+        main.getSqlSetup().setupServer(event.getGuild());
     }
 }

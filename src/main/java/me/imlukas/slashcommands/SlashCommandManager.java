@@ -4,6 +4,7 @@ import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import me.imlukas.slashcommands.annotations.SubCommand;
+import me.imlukas.slashcommands.commands.fun.DogCommand;
 import me.imlukas.slashcommands.commands.fun.RockPaperScissorCommand;
 import me.imlukas.slashcommands.commands.member.AvatarCommand;
 import me.imlukas.slashcommands.commands.member.BanSlashCommand;
@@ -29,14 +30,15 @@ public class SlashCommandManager {
 
     private final List<ISlashCommand> slashCommands = new ArrayList<>();
 
-    public void init(Guild guild, CommandType type) {
-        slashCommands.add(new BanSlashCommand());
-        slashCommands.add(new UnbanSlashCommand());
-        slashCommands.add(new RolesCommand());
-        slashCommands.add(new ServerCommand());
-        slashCommands.add(new RockPaperScissorCommand());
-        slashCommands.add(new AvatarCommand());
+    public void registerCommand(ISlashCommand command) {
+        slashCommands.add(command);
+    }
 
+    public void registerCommands(List<ISlashCommand> commands) {
+        slashCommands.addAll(commands);
+    }
+
+    public void init(Guild guild, CommandType type) {
         List<CommandData> guildCommands = new ArrayList<>();
         List<CommandData> globalCommands = new ArrayList<>();
 
@@ -171,7 +173,6 @@ public class SlashCommandManager {
 
 
         Class<?> clazz = command.getClass();
-        System.out.println("Command: " + clazz.getSimpleName());
 
         Method[] methods = clazz.getMethods();
         if (event.getSubcommandName() != null) {
@@ -188,15 +189,11 @@ public class SlashCommandManager {
             }
         }
         for (Method method : methods) {
-            System.out.println("Method: " + method.getName());
             if (method.isAnnotationPresent(SlashCommandHandler.class)) {
                 run(command, method, context, options);
                 break;
             }
         }
-
-        event.deferReply().queue();
-
     }
 
 
