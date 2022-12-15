@@ -38,8 +38,6 @@ public class DogCommand implements ISlashCommand {
 
         String dogImage = json.getString("message");
 
-        System.out.println(dogImage);
-
         embed.setImage(dogImage);
         ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();
     }

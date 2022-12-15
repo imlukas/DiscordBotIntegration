@@ -65,7 +65,6 @@ public class SQLSetup extends SQLConnectionProvider {
 
     public void addUser(Guild guild, User user) {
 
-        System.out.println("Adding user " + user.getName() + " with ID: "+ user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
         long userID = user.getIdLong();
         CompletableFuture.runAsync(() -> {
             try {
@@ -75,7 +74,6 @@ public class SQLSetup extends SQLConnectionProvider {
                 preparedStatement.setString(2, user.getName());
 
                 preparedStatement.executeUpdate();
-                System.out.println("Added user " + user.getName() + " with ID: "+ user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
             } catch (SQLException e) {
                 System.out.println("Failed to add user " + user.getName() + " with ID: "+ user.getId() + " to " + guild.getName() + " with ID: " + guild.getId());
             }
