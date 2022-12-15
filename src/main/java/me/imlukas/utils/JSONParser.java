@@ -1,6 +1,7 @@
 package me.imlukas.utils;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -24,5 +25,15 @@ public class JSONParser {
             return null;
         }
         return new JSONObject(json);
+    }
+
+    public static JSONArray getJsonArray(URL url) {
+        String json = null;
+        try {
+            json = IOUtils.toString(url, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            return null;
+        }
+        return new JSONArray(json);
     }
 }

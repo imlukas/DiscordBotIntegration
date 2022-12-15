@@ -17,9 +17,12 @@ public class UnbanSlashCommand implements ISlashCommand {
 
     @SlashCommandHandler
     public void run(@Option(name = "user", description = "User to unban", type = OptionType.USER, required = true) User banUser,
-                    @Option(name = "reason", description = "Reason for ban") String reason,
+                    @Option(name = "reason", description = "Reason for unban") String reason,
                     SlashCommandContext ctx) {
 
+        if (reason == null) {
+            reason = "No reason provided";
+        }
         Guild guild = ctx.getGuild();
         guild.unban(banUser).reason(reason).queue();
     }

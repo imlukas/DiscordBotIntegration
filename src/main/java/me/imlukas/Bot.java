@@ -15,7 +15,7 @@ import me.imlukas.slashcommands.commands.member.UnbanSlashCommand;
 import me.imlukas.slashcommands.commands.server.RolesCommand;
 import me.imlukas.slashcommands.commands.server.ServerCommand;
 import me.imlukas.slashcommands.commands.xp.XpCommand;
-import me.imlukas.userxp.listener.UserMessageListener;
+import me.imlukas.slashcommands.commands.xp.listener.UserMessageListener;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;

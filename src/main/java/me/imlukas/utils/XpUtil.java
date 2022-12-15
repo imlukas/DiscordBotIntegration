@@ -23,18 +23,18 @@ public class XpUtil {
      * @return the amount of xp needed to reach the next level.
      */
     public static int getXpNeededForLevel(double xp) {
-        return getLevelXp(getLevelFromXp(xp) + 1) - (int) xp;
+        return getXpToLevel(getLevelFromXp(xp) + 1) - (int) xp;
     }
 
     /**
-     * Calculates the amount of xp needed to reach a specific level.
+     * Calculates the amount of xp needed to reach a specific level based on the xp the user has.
      *
      * @param xp the xp that the user has.
      * @param level the specified level to know the xp for.
      * @return the amount of xp needed to reach specified level.
      */
     public static int getXpNeededForLevel(double xp, int level) {
-        return getLevelXp(level) - (int) xp;
+        return getXpToLevel(level) - (int) xp;
     }
 
 
@@ -44,7 +44,7 @@ public class XpUtil {
      * @param level the level you want to know the xp for.
      * @return the xp needed to reach the level.
      */
-    public static int getLevelXp(double level) {
+    public static int getXpToLevel(double level) {
         return (int) Math.floor(Math.pow((level / EXPONENT ), 2));
     }
 

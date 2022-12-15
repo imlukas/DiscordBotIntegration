@@ -8,6 +8,7 @@ import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import me.imlukas.utils.Colors;
 import me.imlukas.utils.JSONParser;
 import net.dv8tion.jda.api.EmbedBuilder;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -23,7 +24,7 @@ public class CatCommand implements ISlashCommand {
             String breedID = breed.substring(0, 4);
             sURL = "https://api.thecatapi.com/v1/images/search?breed_ids=" + breedID;
         }
-        JSONObject json = JSONParser.getJsonObject(new URL(sURL));
+        JSONArray json = JSONParser.getJsonArray(new URL(sURL));
 
         if (json == null){
             ctx.getEvent().reply(":x: Something went wrong! \nMake sure you put a correct breed.").setEphemeral(true).queue();
@@ -34,8 +35,8 @@ public class CatCommand implements ISlashCommand {
         embed.setTitle(":cat: Meowww!");
         embed.setColor(Colors.EMBED_PURPLE);
 
-        String catImage = json.getString("message");
-
+        JSONObject JSONObject = json.getJSONObject(0);
+        String catImage = JSONObject.getString("url");
         embed.setImage(catImage);
         ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();
     }

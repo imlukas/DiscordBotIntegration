@@ -16,7 +16,7 @@ import java.net.URL;
 public class DogCommand implements ISlashCommand {
 
     @SneakyThrows
-    @SlashCommandHandler()
+    @SlashCommandHandler
     public void run(@Option(name="breed", description="The breed of dog you want to see") String breed,
                     @Option(name="sub-breed", description="The sub-breed of dog you want to see") String subBreed,
                     SlashCommandContext ctx) {
@@ -37,6 +37,8 @@ public class DogCommand implements ISlashCommand {
         embed.setColor(Colors.EMBED_PURPLE);
 
         String dogImage = json.getString("message");
+
+        System.out.println(dogImage);
 
         embed.setImage(dogImage);
         ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();

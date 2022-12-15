@@ -28,7 +28,6 @@ public class XpCommand implements ISlashCommand {
     @SubCommand(name = "view", description = "View your xp")
     public void view(SlashCommandContext ctx) {
         int xp = sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join();
-        System.out.println(XpUtil.getLevelFromXp(xp));
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("XP");
         builder.setDescription("Your XP: " + xp);
@@ -48,15 +47,22 @@ public class XpCommand implements ISlashCommand {
         ctx.getEvent().reply("Gave " + amount + " xp to " + user.getAsTag()).queue();
         // TODO
     }
-    @SubCommand(name = "xpneeded", description = "View your xp")
+    @SubCommand(name = "xpneeded", description = "View xp needed for a level")
     public void xpNeeded(@Option(name = "level", description = "The level you want to know the xp for", required = true, type = OptionType.INTEGER) int level,
                          SlashCommandContext ctx) {
+        int xp = sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join();
+        int userLevel = XpUtil.getLevelFromXp(xp);
+
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle("Level " + level);
-        builder.addField("XP needed:", "" + XpUtil.getLevelXp(level), false);
-        builder.addField("You still need " + XpUtil.getXpNeededForLevel(sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join())
-                + " XP to reach level " + level, "", false);
+        builder.setTitle("Level " + userLevel);
+        builder.addField("XP needed:", "" + XpUtil.getXpToLevel(userLevel), false);
+        if (userLevel >= level){
+            builder.addField("", "You already reached this level! Your current level is " + userLevel, false);
+        } else {
+            builder.addField("You still need " + XpUtil.getXpNeededForLevel(xp)
+                    + " XP to reach level " + userLevel, "", false);
+        }
         builder.setColor(Colors.EMBED_PURPLE);
         ctx.getEvent().replyEmbeds(builder.build()).queue();
     }

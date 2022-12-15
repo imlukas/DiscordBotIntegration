@@ -26,7 +26,13 @@ public class AdminCommand implements ISlashCommand {
 
     @SubCommand(name = "wipe", description = "terminates the bot")
     public void wipe(@Option(name = "user", description = "The user to wipe", type = OptionType.USER, required = true) User user, SlashCommandContext ctx){
+
+        if (user.isBot() || user.isSystem()) {
+            ctx.getEvent().reply("You can't wipe a bot or system user").setEphemeral(true).queue();
+            return;
+        }
         main.getSqlHandler().wipeUser(ctx.getGuild(), user.getIdLong());
+        ctx.getEvent().reply("Wiped " + user.getAsTag()).queue();
     }
     @Override
     public String getName() {

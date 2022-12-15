@@ -1,20 +1,16 @@
 package me.imlukas.database.mysql.impl;
 
-import lombok.AccessLevel;
-import lombok.Getter;
 import me.imlukas.Bot;
 import me.imlukas.utils.SQLConnectionProvider;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.logging.Logger;
 
 import static me.imlukas.database.mysql.impl.SQLQueries.ADD_USER;
 import static me.imlukas.database.mysql.impl.SQLQueries.CREATE_SERVER_TABLE;
@@ -44,14 +40,14 @@ public class SQLSetup extends SQLConnectionProvider {
                 return;
             }
 
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+            String url = "jdbc:sqlite:C:/Users/lukz/Documents/sqlite/verux.db";
+            connection = DriverManager.getConnection(url);
 
 
             connection.setAutoCommit(true);
-            System.out.println("[VeruxBot] Connected to MySQL server.");
+            System.out.println("[VeruxBot] Connected to SQLite.");
         } catch (Exception e) {
-            System.out.println("[VeruxBot] Failed to connect to MySQL server.");
+            System.out.println("[VeruxBot] Failed to connect to SQLite.");
         }
     }
 

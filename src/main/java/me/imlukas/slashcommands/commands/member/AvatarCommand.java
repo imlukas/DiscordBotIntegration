@@ -59,7 +59,7 @@ public class AvatarCommand implements ISlashCommand {
         embed.setTitle("Server icon");
 
         if (ctx.getGuild().getIconUrl() == null) {
-            embed.setDescription("This server doesn't have an icon.");
+            embed.setDescription(":x: This server doesn't have an icon.");
         } else {
             embed.setImage(ctx.getGuild().getIconUrl() + "?size=2048");
         }

@@ -1,4 +1,4 @@
-package me.imlukas.userxp.listener;
+package me.imlukas.slashcommands.commands.xp.listener;
 
 import me.imlukas.Bot;
 import me.imlukas.utils.XpUtil;
@@ -27,14 +27,21 @@ public class UserMessageListener extends ListenerAdapter {
         if (user.isBot()) {
             return;
         }
-        int xp = random.nextInt(10, 40);
-        event.getChannel().sendMessage("Added " + xp + "XP").queue();
-        main.getSqlHandler().addXp(event.getGuild(), xp, user);
-        int playerXp = main.getSqlHandler().getXp(event.getGuild(), user).join();
+        int xp = random.nextInt(5, 35);
 
-        if (playerXp >  XpUtil.getLevelXp(XpUtil.getLevelFromXp(playerXp))) {
-            event.getChannel().sendMessage("You leveled up to level " + XpUtil.getLevelFromXp(playerXp)).queue();
-        }
+        main.getSqlHandler().getXp(event.getGuild(), user).thenAccept((oldXp) -> {
+            main.getSqlHandler().addXp(event.getGuild(), xp, user);
+            main.getSqlHandler().getXp(event.getGuild(), user).thenAccept((newXp) -> {
+                System.out.println(oldXp);
+                int xpNeeded = XpUtil.getXpToLevel(XpUtil.getLevelFromXp(oldXp) + 1);
+
+                System.out.println(newXp + "  " + xpNeeded);
+                if (newXp >= xpNeeded) {
+                    event.getChannel().sendMessage("You leveled up! Your current level is " + XpUtil.getLevelFromXp(newXp)).queue();
+                }
+            });
+        });
+
 
     }
 }
