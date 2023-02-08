@@ -1,4 +1,4 @@
-package me.imlukas.database.mysql.impl;
+package me.imlukas.database.mysql.data;
 
 public enum OrderType {
 

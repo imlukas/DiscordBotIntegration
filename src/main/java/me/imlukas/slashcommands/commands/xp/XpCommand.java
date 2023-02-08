@@ -1,6 +1,8 @@
 package me.imlukas.slashcommands.commands.xp;
 
 import me.imlukas.Bot;
+import me.imlukas.database.mysql.data.ColumnType;
+import me.imlukas.database.mysql.data.DataType;
 import me.imlukas.database.mysql.impl.SQLHandler;
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
@@ -27,15 +29,18 @@ public class XpCommand implements ISlashCommand {
 
     @SubCommand(name = "view", description = "View your xp")
     public void view(SlashCommandContext ctx) {
-        int xp = sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join();
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle("XP");
-        builder.setDescription("Your XP: " + xp);
-        builder.addField("Level", "" +  XpUtil.getLevelFromXp(xp), true);
-        builder.addField("XP to next level", "" + XpUtil.getXpNeededForLevel(xp), true);
-        builder.setColor(Colors.EMBED_PURPLE);
+        DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
 
-        ctx.getEvent().replyEmbeds(builder.build()).queue();
+        sqlHandler.fetch(xpData, ctx.getGuild(), ctx.getUser()).thenAccept((xp) -> {
+            EmbedBuilder builder = new EmbedBuilder();
+            builder.setTitle("XP");
+            builder.setDescription("Your XP: " + xp);
+            builder.addField("Level", "" +  XpUtil.getLevelFromXp(xp), true);
+            builder.addField("XP to next level", "" + XpUtil.getXpNeededForLevel(xp), true);
+            builder.setColor(Colors.EMBED_PURPLE);
+
+            ctx.getEvent().replyEmbeds(builder.build()).queue();
+        });
 
     }
     @SubCommand(name = "give", description = "Give xp to a user")
@@ -43,14 +48,18 @@ public class XpCommand implements ISlashCommand {
                      @Option(name = "amount", description = "The amount of xp to give", type = OptionType.INTEGER) int amount,
                      SlashCommandContext ctx) {
 
-        sqlHandler.addXp(ctx.getGuild(), amount, user);
+        DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
+
+        sqlHandler.addXp(xpData, amount, ctx.getGuild(), user);
         ctx.getEvent().reply("Gave " + amount + " xp to " + user.getAsTag()).queue();
         // TODO
     }
     @SubCommand(name = "xpneeded", description = "View xp needed for a level")
     public void xpNeeded(@Option(name = "level", description = "The level you want to know the xp for", required = true, type = OptionType.INTEGER) int level,
                          SlashCommandContext ctx) {
-        int xp = sqlHandler.getXp(ctx.getGuild(), ctx.getUser()).join();
+
+        DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
+        int xp = sqlHandler.fetch(xpData, ctx.getGuild(), ctx.getUser()).join();
         int userLevel = XpUtil.getLevelFromXp(xp);
 
 

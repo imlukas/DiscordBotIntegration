@@ -1,6 +1,8 @@
 package me.imlukas.database.mysql.impl;
 
 import me.imlukas.Bot;
+import me.imlukas.database.mysql.data.DataType;
+import me.imlukas.database.mysql.data.OrderType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 
@@ -8,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static me.imlukas.database.mysql.impl.SQLQueries.*;
@@ -25,13 +28,13 @@ public class SQLHandler {
         return "server_" + guild.getId();
     }
 
-    public void addXp(Guild guild, int xp, User user){
+    public void addXp(DataType value, int newValue, Guild guild, User user){
         long userId = user.getIdLong();
 
-        getXp(guild, user).thenCompose((oldXp) -> {
-            int newXp = oldXp + xp;
+        fetch(value, guild, user).thenCompose((oldXp) -> {
+            int newXp = oldXp + newValue;
             try {
-                PreparedStatement statement = connection.prepareStatement(UPDATE_XP.replaceFirst("\\?", "server_" + guild.getId()));
+                PreparedStatement statement = connection.prepareStatement(UPDATE_VALUE.replaceFirst("\\?", "server_" + guild.getId()));
                 statement.setInt(1,  newXp);
                 statement.setLong(2, userId);
                 statement.executeUpdate();
@@ -42,10 +45,12 @@ public class SQLHandler {
         });
     }
 
-    public void wipeUser(Guild guild, long id){
+    public void wipeUser(DataType type, Guild guild, long id){
         CompletableFuture.runAsync(() -> {
             try {
-                PreparedStatement statement = connection.prepareStatement(WIPE_USER.replaceFirst("\\?", getTable(guild)));
+
+                PreparedStatement statement = connection.prepareStatement(WIPE_VALUE.replaceFirst("\\?", getTable(guild))
+                        .replaceFirst("\\?", type.getName()));
                 statement.setLong(1, id);
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -58,15 +63,19 @@ public class SQLHandler {
         //TODO
     }
 
-    public void getXpOrdered(int entries, OrderType orderType){
-        //TODO
+    public CompletableFuture<List<Integer>> getOrdered(Guild guild, int entries, String value, OrderType orderType){
+        return null;
     }
 
-    public CompletableFuture<Integer> getXp(Guild guild, User user) {
+    public CompletableFuture<Integer> fetch(DataType value, Guild guild, User user) {
+
+        String table = getTable(guild);
 
         return CompletableFuture.supplyAsync(() -> {
+            String query = GET_VALUE.replaceFirst("\\?", value.getName());
+            query = query.replaceFirst("\\?", table);
             try {
-                PreparedStatement statement = connection.prepareStatement(GET_XP.replaceFirst("\\?", getTable(guild)));
+                PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, user.getIdLong());
                 ResultSet rs = statement.executeQuery();
                 if (rs.next()) {

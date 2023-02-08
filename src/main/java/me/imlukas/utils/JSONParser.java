@@ -27,6 +27,12 @@ public class JSONParser {
         return new JSONObject(json);
     }
 
+
+    /**
+     * Get a json array from a url.
+     * @param url the url to get the json array from.
+     * @return the json array from the url.
+     */
     public static JSONArray getJsonArray(URL url) {
         String json = null;
         try {

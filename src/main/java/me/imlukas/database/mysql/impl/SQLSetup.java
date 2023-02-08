@@ -24,13 +24,23 @@ public class SQLSetup extends SQLConnectionProvider {
     private final String host, database, username, password;
     private final int port;
 
-    public SQLSetup(Bot main, String host, String database, String username, String password, int port) {
+    public SQLSetup(Bot main) {
         this.main = main;
         this.host = "localhost";
         this.username = "root";
         this.password = "";
         this.port = 3306;
         this.database = "veruxbot";
+    }
+
+
+    public SQLSetup(Bot main, String host, String database, String username, String password, int port) {
+        this.main = main;
+        this.host = host;
+        this.username = username;
+        this.password = password;
+        this.port = port;
+        this.database = database;
     }
 
     @Override
