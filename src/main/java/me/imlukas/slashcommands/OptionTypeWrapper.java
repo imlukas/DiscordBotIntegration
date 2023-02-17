@@ -5,6 +5,9 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 
 import java.util.function.Function;
 
+/**
+ * Wrapper for {@link OptionType} to get the value of an {@link OptionMapping}
+ */
 public enum OptionTypeWrapper {
     STRING(OptionMapping::getAsString),
     INTEGER(OptionMapping::getAsInt),
@@ -13,7 +16,8 @@ public enum OptionTypeWrapper {
     CHANNEL(OptionMapping::getAsChannel),
     ROLE(OptionMapping::getAsRole),
     MENTIONABLE(OptionMapping::getAsMentionable),
-    NUMBER(OptionMapping::getAsDouble);
+    NUMBER(OptionMapping::getAsDouble),
+    ATTACHMENT(OptionMapping::getAsAttachment);
 
     private final Function<OptionMapping, Object> function;
 

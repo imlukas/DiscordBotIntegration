@@ -35,7 +35,7 @@ public class XpCommand implements ISlashCommand {
             EmbedBuilder builder = new EmbedBuilder();
             builder.setTitle("XP");
             builder.setDescription("Your XP: " + xp);
-            builder.addField("Level", "" +  XpUtil.getLevelFromXp(xp), true);
+            builder.addField("Level", "" + XpUtil.getLevelFromXp(xp), true);
             builder.addField("XP to next level", "" + XpUtil.getXpNeededForLevel(xp), true);
             builder.setColor(Colors.EMBED_PURPLE);
 
@@ -43,6 +43,7 @@ public class XpCommand implements ISlashCommand {
         });
 
     }
+
     @SubCommand(name = "give", description = "Give xp to a user")
     public void give(@Option(name = "user", description = "The user to give xp to", type = OptionType.USER) User user,
                      @Option(name = "amount", description = "The amount of xp to give", type = OptionType.INTEGER) int amount,
@@ -52,8 +53,8 @@ public class XpCommand implements ISlashCommand {
 
         sqlHandler.addXp(xpData, amount, ctx.getGuild(), user);
         ctx.getEvent().reply("Gave " + amount + " xp to " + user.getAsTag()).queue();
-        // TODO
     }
+
     @SubCommand(name = "xpneeded", description = "View xp needed for a level")
     public void xpNeeded(@Option(name = "level", description = "The level you want to know the xp for", required = true, type = OptionType.INTEGER) int level,
                          SlashCommandContext ctx) {
@@ -66,7 +67,7 @@ public class XpCommand implements ISlashCommand {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("Level " + userLevel);
         builder.addField("XP needed:", "" + XpUtil.getXpToLevel(userLevel), false);
-        if (userLevel >= level){
+        if (userLevel >= level) {
             builder.addField("", "You already reached this level! Your current level is " + userLevel, false);
         } else {
             builder.addField("You still need " + XpUtil.getXpNeededForLevel(xp)

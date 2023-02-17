@@ -4,10 +4,12 @@ import lombok.Getter;
 import me.imlukas.database.mysql.impl.SQLHandler;
 import me.imlukas.database.mysql.impl.SQLSetup;
 import me.imlukas.listeners.*;
-import me.imlukas.localdatabase.json.JSONFileHandler;
+import me.imlukas.database.json.json.JSONFileHandler;
 import me.imlukas.slashcommands.SlashCommandManager;
 import me.imlukas.slashcommands.commands.admin.AdminCommand;
+import me.imlukas.slashcommands.commands.admin.PreferencesCommand;
 import me.imlukas.slashcommands.commands.admin.listener.AdminButtonListener;
+import me.imlukas.slashcommands.commands.admin.listener.AutoCompleteListener;
 import me.imlukas.slashcommands.commands.fun.CatCommand;
 import me.imlukas.slashcommands.commands.fun.DogCommand;
 import me.imlukas.slashcommands.commands.fun.RockPaperScissorCommand;
@@ -55,7 +57,8 @@ public class Bot {
                         new GuildJoinReadyListener(this),
                         new SlashCommandListener(this),
                         new UserMessageListener(this),
-                        new AdminButtonListener())
+                        new AdminButtonListener(),
+                        new AutoCompleteListener(this))
                 .setMemberCachePolicy(MemberCachePolicy.ALL);
         shardManager = builder.build();
 
@@ -71,9 +74,10 @@ public class Bot {
         slashCommandManager.registerCommand(new CatCommand());
         slashCommandManager.registerCommand(new DogCommand());
         slashCommandManager.registerCommand(new XpCommand(this));
-        slashCommandManager.registerCommand(new TicketCommand());
+        slashCommandManager.registerCommand(new TicketCommand(this));
         slashCommandManager.registerCommand(new AdminCommand(this));
         slashCommandManager.registerCommand(new GitHubCommand());
+        slashCommandManager.registerCommand(new PreferencesCommand(this));
     }
 
     public ShardManager getShardManager(){

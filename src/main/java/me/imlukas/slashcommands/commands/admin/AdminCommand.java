@@ -9,9 +9,8 @@ import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -24,13 +23,13 @@ public class AdminCommand implements ISlashCommand {
     }
 
     @SubCommand(name = "terminate", description = "terminates the bot")
-    public void shutdown(){
+    public void shutdown() {
         main.getShardManager().shutdown();
     }
 
 
     @SubCommand(name = "wipe", description = "terminates the bot")
-    public void wipe(@Option(name = "user", description = "The user to wipe", type = OptionType.USER, required = true) User user, SlashCommandContext ctx){
+    public void wipe(@Option(name = "user", description = "The user to wipe", type = OptionType.USER, required = true) User user, SlashCommandContext ctx) {
 
         if (user.isBot() || user.isSystem()) {
             ctx.getEvent().reply("You can't wipe a bot or system user").setEphemeral(true).queue();
@@ -39,6 +38,24 @@ public class AdminCommand implements ISlashCommand {
 
         main.getSqlHandler().wipeUser(new DataType(ColumnType.INT, "xp"), ctx.getGuild(), user.getIdLong());
         ctx.getEvent().reply("Wiped " + user.getAsTag()).queue();
+    }
+
+
+    @SubCommand(name = "upload", description = "Uploads a file to the server")
+    public void upload(@Option(name = "file", description = "the file to upload", type = OptionType.ATTACHMENT, required = true) Message.Attachment file, SlashCommandContext ctx) {
+        EmbedBuilder builder = new EmbedBuilder();
+
+        builder.addField("File name", file.getFileName(), false);
+        builder.addField("File size", file.getSize() + " bytes", false);
+        builder.addField("File url", file.getUrl(), false);
+        builder.addField("File proxy url", file.getProxyUrl(), false);
+        builder.addField("File id", file.getId(), false);
+        builder.addField(" ", file.toAttachmentData(1).toPrettyString(), false);
+
+        ctx.getEvent().replyEmbeds(builder.build()).addActionRow(
+                Button.link(file.getUrl(), "Download")
+        ).queue();
+
     }
 
     @Override

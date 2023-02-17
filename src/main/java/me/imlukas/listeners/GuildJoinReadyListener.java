@@ -1,8 +1,7 @@
 package me.imlukas.listeners;
 
 import me.imlukas.Bot;
-import me.imlukas.localdatabase.data.GuildPreferences;
-import me.imlukas.localdatabase.json.JSONFileHandler;
+import me.imlukas.database.json.json.JSONFileHandler;
 import me.imlukas.slashcommands.CommandType;
 import me.imlukas.slashcommands.SlashCommandManager;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;

@@ -6,8 +6,9 @@ import lombok.SneakyThrows;
 import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
-import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SubCommand;
+import me.imlukas.slashcommands.commands.others.git.data.GitUser;
+import me.imlukas.slashcommands.commands.others.git.data.Repository;
 import me.imlukas.utils.JSONParser;
 import me.imlukas.utils.StringUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,11 +18,6 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class GitHubCommand implements ISlashCommand {
 
@@ -108,7 +104,29 @@ public class GitHubCommand implements ISlashCommand {
         }
 
         JSONObject jsonObject = JSONParser.getJsonObject(gitURL);
+        Gson gson = new Gson();
+
+        GitUser gitUser = gson.fromJson(jsonObject.toString(), GitUser.class);
 
         EmbedBuilder embed = new EmbedBuilder();
+
+        embed.setAuthor(gitUser.getName(), gitUser.getURL(), gitUser.getAvatar());
+
+        // Data
+        embed.addField("Name", gitUser.getName(), true);
+        embed.addField("Location", gitUser.getLocation(), true);
+        embed.addBlankField(true);
+
+        // Repos and gists
+        embed.addField("Public Repos", gitUser.getRepos() + "", true);
+        embed.addField("Public Gists", gitUser.getGists() + "", true);
+        embed.addBlankField(true);
+
+
+        embed.setThumbnail(gitUser.getAvatar());
+        embed.setFooter("User created at " + gitUser.getCreationDate());
+        embed.setColor(Color.decode("#6cc644"));
+
+        ctx.getEvent().replyEmbeds(embed.build()).queue();
     }
 }

@@ -1,4 +1,4 @@
-package me.imlukas.slashcommands.commands.others.git;
+package me.imlukas.slashcommands.commands.others.git.data;
 
 import lombok.Data;
 
