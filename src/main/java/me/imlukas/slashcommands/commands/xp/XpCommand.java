@@ -27,6 +27,8 @@ public class XpCommand implements ISlashCommand {
         // TODO
     }
 
+
+
     @SubCommand(name = "view", description = "View your xp")
     public void view(SlashCommandContext ctx) {
         DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
@@ -65,8 +67,8 @@ public class XpCommand implements ISlashCommand {
 
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle("Level " + userLevel);
-        builder.addField("XP needed:", "" + XpUtil.getXpToLevel(userLevel), false);
+        builder.setTitle("Level " + level);
+        builder.addField("XP needed:", "" + XpUtil.getXpToLevel(level), false);
         if (userLevel >= level) {
             builder.addField("", "You already reached this level! Your current level is " + userLevel, false);
         } else {

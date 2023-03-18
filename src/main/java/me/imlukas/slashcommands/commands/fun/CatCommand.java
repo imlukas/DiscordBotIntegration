@@ -41,6 +41,7 @@ public class CatCommand implements ISlashCommand {
         ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();
     }
 
+
     @Override
     public String getName() {
         return "cat";

@@ -15,7 +15,6 @@ public class XpUtil {
         return (int) (EXPONENT * Math.sqrt(xp));
     }
 
-
     /**
      * Calculates the amount of xp needed to reach the next level based on your current xp.
      *
@@ -45,7 +44,7 @@ public class XpUtil {
      * @return the xp needed to reach the level.
      */
     public static int getXpToLevel(double level) {
-        return (int) Math.floor(Math.pow((level / EXPONENT ), 2));
+        return (int) Math.floor(Math.pow((level / EXPONENT ), 2.35));
     }
 
 

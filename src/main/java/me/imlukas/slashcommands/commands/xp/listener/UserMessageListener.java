@@ -39,12 +39,26 @@ public class UserMessageListener extends ListenerAdapter {
         main.getSqlHandler().fetch(xpData, event.getGuild(), user).thenAccept((oldXp) -> {
             main.getSqlHandler().addXp(xpData, xp, guild, user);
 
-            main.getSqlHandler().fetch(xpData, guild, user).thenAccept((newXp) -> {
-                int xpNeeded = XpUtil.getXpToLevel(XpUtil.getLevelFromXp(oldXp) + 1);
-                if (newXp >= xpNeeded) {
-                    event.getChannel().sendMessage("You leveled up! Your current level is " + XpUtil.getLevelFromXp(newXp)).queue();
-                }
-            });
+            int newXp = oldXp + xp;
+            int currentLevel = XpUtil.getLevelFromXp(oldXp);
+            int nextLevelXpNeeded = XpUtil.getXpToLevel(currentLevel + 1);
+            int nextLevelXp = nextLevelXpNeeded - newXp;
+
+            System.out.println(currentLevel);
+            System.out.println("Old xp: " + oldXp);
+            System.out.println("New xp: " + newXp);
+            System.out.println("Xp needed for level " + (currentLevel + 1) + ":" + nextLevelXpNeeded);
+            System.out.println("Xp needed minus new xp: " + nextLevelXp);
+
+            if (nextLevelXp <=0.99) {
+                event.getChannel().sendMessage("Congrats " + user.getAsMention() + " you leveled up to level " + (currentLevel + 1)).queue();
+                return;
+            }
+
+
+
+
+
         });
 
 

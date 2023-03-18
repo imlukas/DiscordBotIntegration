@@ -32,9 +32,13 @@ public class SQLHandler {
         long userId = user.getIdLong();
 
         fetch(value, guild, user).thenCompose((oldXp) -> {
-            int newXp = oldXp + newValue;
+
+            System.out.println("add xp' old xp: " + oldXp);
+            int newXp = (int) oldXp + newValue;
             try {
-                PreparedStatement statement = connection.prepareStatement(UPDATE_VALUE.replaceFirst("\\?", "server_" + guild.getId()));
+
+                PreparedStatement statement = connection.prepareStatement(UPDATE_VALUE.replaceFirst("\\?", getTable(guild))
+                        .replaceFirst("\\?", value.getName()));
                 statement.setInt(1,  newXp);
                 statement.setLong(2, userId);
                 statement.executeUpdate();
@@ -67,7 +71,7 @@ public class SQLHandler {
         return null;
     }
 
-    public CompletableFuture<Integer> fetch(DataType value, Guild guild, User user) {
+    public CompletableFuture<?> fetch(DataType value, Guild guild, User user) {
 
         String table = getTable(guild);
 

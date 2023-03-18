@@ -23,6 +23,12 @@ public class SlashCommandManager {
 
     private final List<ISlashCommand> slashCommands = new ArrayList<>();
 
+    public void registerCommand(ISlashCommand... commands) {
+        for (ISlashCommand command : commands) {
+            registerCommand(command);
+        }
+    }
+
     public void registerCommand(ISlashCommand command) {
         slashCommands.add(command);
     }

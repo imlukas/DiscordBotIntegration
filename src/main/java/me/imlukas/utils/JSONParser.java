@@ -40,6 +40,7 @@ public class JSONParser {
         } catch (IOException e) {
             return null;
         }
+
         return new JSONArray(json);
     }
 }
