@@ -15,7 +15,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class UserMessageListener extends ListenerAdapter {
 
-    // TODO: RE-WRITE XP SYSTEM
     private final Bot main;
     private final Random random = ThreadLocalRandom.current();
 
@@ -37,10 +36,11 @@ public class UserMessageListener extends ListenerAdapter {
 
         Guild guild = event.getGuild();
 
-        main.getSqlHandler().fetch(xpData, event.getGuild(), user).thenAccept(( oldXp) -> {
+        main.getSqlHandler().fetch(xpData, event.getGuild(), user).thenAccept((oldXp) -> {
             main.getSqlHandler().addXp(xpData, xp, guild, user);
-            int newXp = (int) oldXp + xp;
-            int currentLevel = XpUtil.getLevelFromXp((int) oldXp);
+
+            int newXp = oldXp + xp;
+            int currentLevel = XpUtil.getLevelFromXp(oldXp);
             int nextLevelXpNeeded = XpUtil.getXpToLevel(currentLevel + 1);
             int nextLevelXp = nextLevelXpNeeded - newXp;
 
@@ -54,6 +54,10 @@ public class UserMessageListener extends ListenerAdapter {
                 event.getChannel().sendMessage("Congrats " + user.getAsMention() + " you leveled up to level " + (currentLevel + 1)).queue();
                 return;
             }
+
+
+
+
 
         });
 

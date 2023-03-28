@@ -2,7 +2,7 @@ package me.imlukas.slashcommands;
 
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 
-public interface SlashCommand {
+public interface ISlashCommand {
 
 
     String getName();

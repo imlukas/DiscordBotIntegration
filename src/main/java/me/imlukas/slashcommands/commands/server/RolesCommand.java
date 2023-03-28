@@ -1,6 +1,6 @@
 package me.imlukas.slashcommands.commands.server;
 
-import me.imlukas.slashcommands.SlashCommand;
+import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.entities.Guild;
@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 import java.util.List;
 
-public class RolesCommand implements SlashCommand {
+public class RolesCommand implements ISlashCommand {
 
     @SlashCommandHandler()
     public void run(SlashCommandContext ctx) {

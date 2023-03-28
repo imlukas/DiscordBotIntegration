@@ -41,7 +41,7 @@ public class JSONFileHandler {
         index.put("information", serverInfo);
         index.put("preferences", serverPreferences);
 
-        try (FileWriter file = new FileWriter(getTable(guild) + ".json")) {
+        try (FileWriter file = new FileWriter("src/main/java/me/imlukas/database/json" + File.separator + getTable(guild) + ".json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(index, file);
 
@@ -53,7 +53,7 @@ public class JSONFileHandler {
 
     public JsonObject parseJSON(Guild guild) {
         // get the JSON file for the server
-        try (FileReader reader = new FileReader(getTable(guild) + ".json")) {
+        try (FileReader reader = new FileReader("src/main/java/me/imlukas/database/json" + File.separator + getTable(guild) + ".json")) {
             return JsonParser.parseReader(reader).getAsJsonObject();
 
         } catch (IOException e) {

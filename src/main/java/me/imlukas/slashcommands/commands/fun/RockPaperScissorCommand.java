@@ -1,6 +1,6 @@
 package me.imlukas.slashcommands.commands.fun;
 
-import me.imlukas.slashcommands.SlashCommand;
+import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static me.imlukas.utils.Colors.EMBED_PURPLE;
 
-public class RockPaperScissorCommand implements SlashCommand {
+public class RockPaperScissorCommand implements ISlashCommand {
 
     private final Random random = ThreadLocalRandom.current();
 
@@ -46,7 +46,7 @@ public class RockPaperScissorCommand implements SlashCommand {
         } else {
             embedBuilder.setTitle("You Lost!");
         }
-        embedBuilder.setDescription("You choose: " + MarkdownUtil.bold(choices.get(userChoice)) +
+        embedBuilder.setDescription("You chose: " + MarkdownUtil.bold(choices.get(userChoice)) +
                 "\nI choose: " + MarkdownUtil.bold(choices.get(botChoice)));
         ctx.getEvent().replyEmbeds(embedBuilder.build()).queue();
     }

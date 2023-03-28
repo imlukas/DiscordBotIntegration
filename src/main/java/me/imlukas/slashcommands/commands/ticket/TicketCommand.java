@@ -2,7 +2,7 @@ package me.imlukas.slashcommands.commands.ticket;
 
 import me.imlukas.Bot;
 import me.imlukas.database.json.json.JSONFileHandler;
-import me.imlukas.slashcommands.SlashCommand;
+import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-public class TicketCommand implements SlashCommand {
+public class TicketCommand implements ISlashCommand {
 
     private final Bot main;
     private final JSONFileHandler jsonFileHandler;

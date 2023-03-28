@@ -1,6 +1,6 @@
 package me.imlukas.slashcommands.commands.server;
 
-import me.imlukas.slashcommands.SlashCommand;
+import me.imlukas.slashcommands.ISlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 import java.time.OffsetDateTime;
 
-public class ServerCommand implements SlashCommand {
+public class ServerCommand implements ISlashCommand {
 
     @SlashCommandHandler
     public void run(SlashCommandContext ctx) {

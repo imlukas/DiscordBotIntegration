@@ -1,6 +1,7 @@
 package me.imlukas.slashcommands;
 
 import me.imlukas.slashcommands.annotations.Option;
+import me.imlukas.slashcommands.annotations.SlashCommand;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import me.imlukas.slashcommands.annotations.SubCommand;
 import net.dv8tion.jda.api.entities.Guild;
@@ -20,19 +21,19 @@ import java.util.Map;
 
 public class SlashCommandManager {
 
-    private final List<SlashCommand> slashCommands = new ArrayList<>();
+    private final List<ISlashCommand> slashCommands = new ArrayList<>();
 
-    public void registerCommand(SlashCommand... commands) {
-        for (SlashCommand command : commands) {
+    public void registerCommand(ISlashCommand... commands) {
+        for (ISlashCommand command : commands) {
             registerCommand(command);
         }
     }
 
-    public void registerCommand(SlashCommand command) {
+    public void registerCommand(ISlashCommand command) {
         slashCommands.add(command);
     }
 
-    public void registerCommand(List<SlashCommand> commands) {
+    public void registerCommands(List<ISlashCommand> commands) {
         slashCommands.addAll(commands);
     }
 
@@ -49,7 +50,7 @@ public class SlashCommandManager {
         List<CommandData> guildCommands = new ArrayList<>();
         List<CommandData> globalCommands = new ArrayList<>();
 
-        for (SlashCommand command : getSlashCommands()) {
+        for (ISlashCommand command : getSlashCommands()) {
 
             Class<?> clazz = command.getClass();
 
@@ -99,8 +100,8 @@ public class SlashCommandManager {
 
             // Handle command type
             CommandType commandType = type;
-            if (clazz.isAnnotationPresent(me.imlukas.slashcommands.annotations.SlashCommand.class)) {
-                commandType = clazz.getAnnotation(me.imlukas.slashcommands.annotations.SlashCommand.class).type();
+            if (clazz.isAnnotationPresent(SlashCommand.class)) {
+                commandType = clazz.getAnnotation(SlashCommand.class).type();
             }
             if (commandType == CommandType.GUILD) {
                 guildCommands.add(commandData.setDefaultPermissions(command.getPermission()));
@@ -136,7 +137,7 @@ public class SlashCommandManager {
      *
      * @return all the registered slash commands
      */
-    public List<SlashCommand> getSlashCommands() {
+    public List<ISlashCommand> getSlashCommands() {
         return slashCommands;
     }
 
@@ -147,10 +148,10 @@ public class SlashCommandManager {
      * @return Desired SlashCommand or null if not found
      */
     @Nullable
-    public SlashCommand getCommand(String commandName) {
+    public ISlashCommand getCommand(String commandName) {
 
         String searchLower = commandName.toLowerCase();
-        for (SlashCommand cmd : getSlashCommands()) {
+        for (ISlashCommand cmd : getSlashCommands()) {
             if (cmd.getName().equalsIgnoreCase(searchLower)) {
                 return cmd;
             }
@@ -171,7 +172,7 @@ public class SlashCommandManager {
      * @param context  context of the slash command
      * @param options  options of the slash command if any
      */
-    public void run(SlashCommand instance, Method method, SlashCommandContext context, Map<String, Object> options) {
+    public void run(ISlashCommand instance, Method method, SlashCommandContext context, Map<String, Object> options) {
 
         // handle method arguments and options
         Parameter[] parameters = method.getParameters();
@@ -205,7 +206,7 @@ public class SlashCommandManager {
      */
     public void handle(SlashCommandInteractionEvent event) {
 
-        SlashCommand command = getCommand(event.getName());
+        ISlashCommand command = getCommand(event.getName());
 
         if (command == null) {
             return;
