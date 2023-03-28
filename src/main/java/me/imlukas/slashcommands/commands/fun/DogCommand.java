@@ -1,7 +1,7 @@
 package me.imlukas.slashcommands.commands.fun;
 
 import lombok.SneakyThrows;
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.net.URL;
 
-public class DogCommand implements ISlashCommand {
+public class DogCommand implements SlashCommand {
 
     @SneakyThrows
     @SlashCommandHandler

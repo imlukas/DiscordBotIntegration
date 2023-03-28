@@ -4,7 +4,7 @@ import me.imlukas.Bot;
 import me.imlukas.database.mysql.data.ColumnType;
 import me.imlukas.database.mysql.data.DataType;
 import me.imlukas.database.mysql.impl.SQLHandler;
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
@@ -15,7 +15,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 
-public class XpCommand implements ISlashCommand {
+public class XpCommand implements SlashCommand {
+
+    // TODO: RE-WRITE XP SYSTEM
     private final SQLHandler sqlHandler;
 
     public XpCommand(Bot main) {
@@ -32,17 +34,6 @@ public class XpCommand implements ISlashCommand {
     @SubCommand(name = "view", description = "View your xp")
     public void view(SlashCommandContext ctx) {
         DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
-
-        sqlHandler.fetch(xpData, ctx.getGuild(), ctx.getUser()).thenAccept((xp) -> {
-            EmbedBuilder builder = new EmbedBuilder();
-            builder.setTitle("XP");
-            builder.setDescription("Your XP: " + xp);
-            builder.addField("Level", "" + XpUtil.getLevelFromXp(xp), true);
-            builder.addField("XP to next level", "" + XpUtil.getXpNeededForLevel(xp), true);
-            builder.setColor(Colors.EMBED_PURPLE);
-
-            ctx.getEvent().replyEmbeds(builder.build()).queue();
-        });
 
     }
 
@@ -62,7 +53,7 @@ public class XpCommand implements ISlashCommand {
                          SlashCommandContext ctx) {
 
         DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
-        int xp = sqlHandler.fetch(xpData, ctx.getGuild(), ctx.getUser()).join();
+        int xp = 0;
         int userLevel = XpUtil.getLevelFromXp(xp);
 
 

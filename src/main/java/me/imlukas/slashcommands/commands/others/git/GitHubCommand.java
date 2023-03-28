@@ -3,7 +3,7 @@ package me.imlukas.slashcommands.commands.others.git;
 
 import com.google.gson.Gson;
 import lombok.SneakyThrows;
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SubCommand;
@@ -19,7 +19,7 @@ import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class GitHubCommand implements ISlashCommand {
+public class GitHubCommand implements SlashCommand {
 
     @SneakyThrows
     @SubCommand(name = "repository", description = "Get info on a repository")
@@ -84,16 +84,6 @@ public class GitHubCommand implements ISlashCommand {
 
     }
 
-    @Override
-    public String getName() {
-        return "github";
-    }
-
-    @Override
-    public String getDescription() {
-        return "A way to quickly access github information";
-    }
-
     @SubCommand(name = "user", description = "Get info on a user")
     public void user(@Option(name = "user", description = "The user to get info on", type = OptionType.STRING, required = true) String user, SlashCommandContext ctx) {
         URL gitURL = null;
@@ -128,5 +118,15 @@ public class GitHubCommand implements ISlashCommand {
         embed.setColor(Color.decode("#6cc644"));
 
         ctx.getEvent().replyEmbeds(embed.build()).queue();
+    }
+
+    @Override
+    public String getName() {
+        return "github";
+    }
+
+    @Override
+    public String getDescription() {
+        return "A way to quickly access github information";
     }
 }
