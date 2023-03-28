@@ -1,6 +1,6 @@
 package me.imlukas.slashcommands.commands.member;
 
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 
-public class UnbanSlashCommand implements ISlashCommand {
+public class UnbanSlashCommand implements SlashCommand {
 
     @SlashCommandHandler
     public void run(@Option(name = "user", description = "User to unban", type = OptionType.USER, required = true) User banUser,

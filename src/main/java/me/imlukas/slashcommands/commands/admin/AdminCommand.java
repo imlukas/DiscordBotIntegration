@@ -3,7 +3,7 @@ package me.imlukas.slashcommands.commands.admin;
 import me.imlukas.Bot;
 import me.imlukas.database.mysql.data.ColumnType;
 import me.imlukas.database.mysql.data.DataType;
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SubCommand;
@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-public class AdminCommand implements ISlashCommand {
+public class AdminCommand implements SlashCommand {
     private final Bot main;
 
     public AdminCommand(Bot main) {

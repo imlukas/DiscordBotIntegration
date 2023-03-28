@@ -1,6 +1,6 @@
 package me.imlukas.slashcommands.commands.member;
 
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import java.util.concurrent.TimeUnit;
 
 
-public class BanSlashCommand implements ISlashCommand {
+public class BanSlashCommand implements SlashCommand {
 
     @SlashCommandHandler
     public void run(@Option(name = "user", description = "User to ban", type = OptionType.USER, required = true) User banUser,

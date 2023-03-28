@@ -2,14 +2,14 @@ package me.imlukas.slashcommands.commands.admin;
 
 import me.imlukas.Bot;
 import me.imlukas.database.json.json.JSONFileHandler;
-import me.imlukas.slashcommands.ISlashCommand;
+import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
 import me.imlukas.slashcommands.annotations.SlashCommandHandler;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 
-public class PreferencesCommand implements ISlashCommand {
+public class PreferencesCommand implements SlashCommand {
 
     private final Bot main;
     private final JSONFileHandler jsonFileHandler;
