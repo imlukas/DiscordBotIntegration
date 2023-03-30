@@ -1,9 +1,6 @@
 package me.imlukas.slashcommands.commands.xp;
 
 import me.imlukas.Bot;
-import me.imlukas.database.mysql.data.ColumnType;
-import me.imlukas.database.mysql.data.DataType;
-import me.imlukas.database.mysql.impl.SQLHandler;
 import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
@@ -18,10 +15,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 public class XpCommand implements SlashCommand {
 
     // TODO: RE-WRITE XP SYSTEM
-    private final SQLHandler sqlHandler;
 
     public XpCommand(Bot main) {
-        this.sqlHandler = main.getSqlHandler();
     }
 
     @SlashCommandHandler
@@ -33,7 +28,6 @@ public class XpCommand implements SlashCommand {
 
     @SubCommand(name = "view", description = "View your xp")
     public void view(SlashCommandContext ctx) {
-        DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
 
     }
 
@@ -42,9 +36,6 @@ public class XpCommand implements SlashCommand {
                      @Option(name = "amount", description = "The amount of xp to give", type = OptionType.INTEGER) int amount,
                      SlashCommandContext ctx) {
 
-        DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
-
-        sqlHandler.addXp(xpData, amount, ctx.getGuild(), user);
         ctx.getEvent().reply("Gave " + amount + " xp to " + user.getAsTag()).queue();
     }
 
@@ -52,7 +43,6 @@ public class XpCommand implements SlashCommand {
     public void xpNeeded(@Option(name = "level", description = "The level you want to know the xp for", required = true, type = OptionType.INTEGER) int level,
                          SlashCommandContext ctx) {
 
-        DataType<Integer> xpData = new DataType<>(ColumnType.INT, "xp");
         int xp = 0;
         int userLevel = XpUtil.getLevelFromXp(xp);
 

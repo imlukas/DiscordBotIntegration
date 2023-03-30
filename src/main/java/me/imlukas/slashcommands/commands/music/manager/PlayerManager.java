@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import me.imlukas.slashcommands.SlashCommandContext;
+import me.imlukas.utils.Colors;
 import me.imlukas.utils.EmbedBuilders;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -46,9 +47,9 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack audioTrack) {
                 musicManager.getTrackScheduler().queue(audioTrack);
 
-                EmbedBuilder embedBuilder = EmbedBuilders.MUSIC_EMBED;
+                EmbedBuilder embedBuilder = new EmbedBuilder().setColor(Colors.EMBED_BURGUNDY).setFooter("Verux music");
 
-                int seconds = (int) (audioTrack.getInfo().length / 1000) % 60;
+                int seconds = (int) (audioTrack.getInfo().length / 1000);
 
                 embedBuilder.setTitle("[Success] Track loaded");
                 embedBuilder.setDescription(audioTrack.getInfo().title);

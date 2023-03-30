@@ -2,8 +2,6 @@ package me.imlukas;
 
 import lombok.Getter;
 import me.imlukas.database.json.json.JSONFileHandler;
-import me.imlukas.database.mysql.impl.SQLHandler;
-import me.imlukas.database.mysql.impl.SQLSetup;
 import me.imlukas.listeners.EnterLeaveListener;
 import me.imlukas.listeners.GuildJoinReadyListener;
 import me.imlukas.listeners.SlashCommandListener;
@@ -46,8 +44,6 @@ public class Bot {
     private final ShardManager shardManager;
     private final SlashCommandManager slashCommandManager;
     private final JSONFileHandler jsonFileHandler;
-    private final SQLSetup sqlSetup;
-    private final SQLHandler sqlHandler;
 
     public static final SpotifyApi SPOTIFY_API = new SpotifyApi.Builder()
             .setAccessToken(SPOTIFY_TOKEN)
@@ -55,8 +51,6 @@ public class Bot {
 
     public Bot() throws LoginException {
         jsonFileHandler = new JSONFileHandler();
-        sqlSetup = new SQLSetup(this);
-        sqlHandler = new SQLHandler(this);
         slashCommandManager = new SlashCommandManager();
         registerCommands();
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(DISCORD_TOKEN)

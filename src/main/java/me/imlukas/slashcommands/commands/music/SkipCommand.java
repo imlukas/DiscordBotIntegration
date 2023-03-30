@@ -18,6 +18,7 @@ public class SkipCommand implements SlashCommand {
         GuildMusicManager musicManager = manager.getMusicManager(ctx.getGuild());
 
         if (index > 0) {
+            index = index - 1;
             AudioTrack audioTrack = musicManager.getTrackScheduler().removeTrack(index);
             if (audioTrack == null) {
                 ctx.getEvent().reply("There is no track in the index " + index).queue();

@@ -1,8 +1,6 @@
 package me.imlukas.slashcommands.commands.admin;
 
 import me.imlukas.Bot;
-import me.imlukas.database.mysql.data.ColumnType;
-import me.imlukas.database.mysql.data.DataType;
 import me.imlukas.slashcommands.SlashCommand;
 import me.imlukas.slashcommands.SlashCommandContext;
 import me.imlukas.slashcommands.annotations.Option;
@@ -36,7 +34,6 @@ public class AdminCommand implements SlashCommand {
             return;
         }
 
-        main.getSqlHandler().wipeUser(new DataType(ColumnType.INT, "xp"), ctx.getGuild(), user.getIdLong());
         ctx.getEvent().reply("Wiped " + user.getAsTag()).queue();
     }
 
