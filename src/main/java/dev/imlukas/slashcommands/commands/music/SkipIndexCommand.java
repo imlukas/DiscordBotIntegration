@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 
 public class SkipIndexCommand implements SlashCommand {
     @SlashCommandHandler
-    public void run(@Option(name = "index", description = "Index of the music to skip", type = OptionType.INTEGER, required = true) int index, SlashCommandContext ctx) {
+    public void run(@Option(name = "skipindex", description = "Index of the music to skip", type = OptionType.INTEGER, required = true) int index, SlashCommandContext ctx) {
         PlayerManager manager = PlayerManager.getInstance();
         GuildMusicManager musicManager = manager.getMusicManager(ctx.getGuild());
         index = index - 1;

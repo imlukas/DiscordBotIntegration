@@ -36,7 +36,6 @@ public class ServerCommand implements SlashCommand {
             onlineMembers += 1;
         }
 
-
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setAuthor(guildName, null, guildLogo);
         embedBuilder.setThumbnail(guildLogo);
@@ -50,7 +49,7 @@ public class ServerCommand implements SlashCommand {
         embedBuilder.build();
 
 
-        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        ctx.getEvent().replyEmbeds(embedBuilder.build()).queue();
 
     }
 

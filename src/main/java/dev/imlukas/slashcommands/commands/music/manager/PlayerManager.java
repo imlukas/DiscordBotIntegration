@@ -53,7 +53,7 @@ public class PlayerManager {
                 } else {
                     musicManager.getTrackScheduler().queue(audioTrack);
                     embedBuilder.setTitle("[Success] Track loaded");
-                    embedBuilder.addField("", "Title: " + audioTrack.getInfo().title, false);
+                    embedBuilder.setDescription("Title: " + audioTrack.getInfo().title);
                     embedBuilder.addField("", "Duration: " + formattedTime + " Minutes", false);
                 }
 

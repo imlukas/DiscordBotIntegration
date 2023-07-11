@@ -86,6 +86,7 @@ public class VeruxBot {
         slashCommandManager.registerCommand(new QueueCommand());
         slashCommandManager.registerCommand(new PauseCommand());
         slashCommandManager.registerCommand(new ClearCommand());
+        slashCommandManager.registerCommand(new NowPlayingCommand());
     }
 
     public ShardManager getShardManager() {

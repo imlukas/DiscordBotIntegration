@@ -26,7 +26,7 @@ public class AdminCommand implements SlashCommand {
         ctx.getEvent().reply("Server's data has been reset.").queue();
     }
 
-    @SubCommand(name = "clearchannlel", description = "Clears the channel")
+    @SubCommand(name = "clearchannel", description = "Clears the channel")
     public void clear(@Option(name = "channel", description = "The channel to clear", type = OptionType.CHANNEL) String channel, SlashCommandContext ctx) {
         Channel eventChannel = ctx.getEvent().getChannel();
 
