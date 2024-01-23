@@ -4,6 +4,7 @@ import dev.imlukas.util.command.SlashCommand;
 import dev.imlukas.util.command.SlashCommandContext;
 import dev.imlukas.util.command.annotations.Option;
 import dev.imlukas.util.command.annotations.SlashCommandHandler;
+import dev.imlukas.util.misc.utils.EmbedBuilders;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.utils.MarkdownUtil;
 
@@ -33,8 +34,7 @@ public class RockPaperScissorCommand implements SlashCommand {
 
 
         int diff = userChoice - botChoice;
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setColor(PURPLE);
+        EmbedBuilder embedBuilder = EmbedBuilders.createBuilder(PURPLE);
 
         if (userChoice == botChoice) {
             embedBuilder.setTitle("It's a tie!");
@@ -46,7 +46,7 @@ public class RockPaperScissorCommand implements SlashCommand {
         }
         embedBuilder.setDescription("You choose: " + MarkdownUtil.bold(choices.get(userChoice)) +
                 "\nI choose: " + MarkdownUtil.bold(choices.get(botChoice)));
-        ctx.getEvent().replyEmbeds(embedBuilder.build()).queue();
+        ctx.replyEmbed(embedBuilder.build());
     }
 
     @Override

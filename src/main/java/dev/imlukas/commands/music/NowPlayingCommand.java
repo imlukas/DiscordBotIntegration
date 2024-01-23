@@ -28,7 +28,7 @@ public class NowPlayingCommand implements SlashCommand {
 
 
         if (track == null) {
-            ctx.replyEmbed(EmbedBuilders.error("There is no music playing", Colors.BURGUNDY));
+            ctx.replyEmbed(EmbedBuilders.error("There is no music playing", Colors.BURGUNDY).build());
             return;
         }
 

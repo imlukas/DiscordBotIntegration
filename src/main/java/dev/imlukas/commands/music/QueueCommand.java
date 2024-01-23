@@ -32,7 +32,7 @@ public class QueueCommand implements SlashCommand {
         LinkedList<AudioTrack> queue = musicManager.getTrackQueue().getQueue();
 
         if (queue.isEmpty()) {
-            ctx.replyEmbed(EmbedBuilders.error("The queue is empty"));
+            ctx.replyEmbed(EmbedBuilders.error("The queue is empty").build());
             return;
         }
 

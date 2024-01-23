@@ -18,7 +18,7 @@ public class SkipCommand implements SlashCommand {
         AudioTrack audioTrack =  musicManager.getTrackQueue().nextTrack();
 
         if (audioTrack == null) {
-            ctx.replyEmbed(EmbedBuilders.error("There is no track to skip"));
+            ctx.replyEmbed(EmbedBuilders.error("There is no track to skip").build());
             return;
         }
 

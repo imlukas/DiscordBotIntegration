@@ -28,7 +28,7 @@ public class PlayCommand implements SlashCommand {
         }
 
         if(!memberState.inAudioChannel()) {
-            ctx.replyEmbed(EmbedBuilders.error("You need to be in a voice channel to play music"));
+            ctx.replyEmbed(EmbedBuilders.error("You need to be in a voice channel to play music").build());
             return;
         }
 

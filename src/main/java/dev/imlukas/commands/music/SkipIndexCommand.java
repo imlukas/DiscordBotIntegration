@@ -18,17 +18,16 @@ public class SkipIndexCommand implements SlashCommand {
         GuildMusicManager musicManager = manager.getMusicManager(ctx.getGuild());
         index = index - 1;
         AudioTrack audioTrack = musicManager.getTrackQueue().removeTrack(index);
-        EmbedBuilder embedBuilder = EmbedBuilders.getMusicEmbed();
 
         if (audioTrack == null) {
-            ctx.replyEmbed(EmbedBuilders.error("There is no track to skip at that index."));
+            ctx.replyEmbed(EmbedBuilders.error("There is no track to skip at that index.").build());
             return;
         }
 
-        embedBuilder.setTitle("[Success] Skipped the track");
+        EmbedBuilder embedBuilder = EmbedBuilders.success("Skipped the track");
         embedBuilder.addField("" , "Name: " + audioTrack.getInfo().title, false);
         embedBuilder.addField("" , "URL: " + audioTrack.getInfo().uri, false);
-        ctx.getEvent().replyEmbeds(embedBuilder.build()).queue();
+        ctx.replyEmbed(embedBuilder.build());
     }
     @Override
     public String getName() {

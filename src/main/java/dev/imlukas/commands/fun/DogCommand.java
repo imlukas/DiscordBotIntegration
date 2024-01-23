@@ -1,5 +1,6 @@
 package dev.imlukas.commands.fun;
 
+import dev.imlukas.util.misc.utils.EmbedBuilders;
 import lombok.SneakyThrows;
 import dev.imlukas.util.command.SlashCommand;
 import dev.imlukas.util.command.SlashCommandContext;
@@ -11,6 +12,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import org.json.JSONObject;
 
 import java.net.URL;
+
+import static dev.imlukas.util.misc.utils.Colors.PURPLE;
 
 public class DogCommand implements SlashCommand {
 
@@ -31,14 +34,13 @@ public class DogCommand implements SlashCommand {
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder();
+        EmbedBuilder embed = EmbedBuilders.createBuilder(PURPLE);
         embed.setTitle(":dog: woof!");
-        embed.setColor(Colors.PURPLE);
 
         String dogImage = json.getString("message");
 
         embed.setImage(dogImage);
-        ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();
+        ctx.replyEmbed(embed.build());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package dev.imlukas.commands.fun;
 
+import dev.imlukas.util.misc.utils.EmbedBuilders;
 import lombok.SneakyThrows;
 import dev.imlukas.util.command.SlashCommand;
 import dev.imlukas.util.command.SlashCommandContext;
@@ -12,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URL;
+
+import static dev.imlukas.util.misc.utils.Colors.PURPLE;
 
 public class CatCommand implements SlashCommand {
 
@@ -31,14 +34,13 @@ public class CatCommand implements SlashCommand {
             return;
         }
 
-        EmbedBuilder embed = new EmbedBuilder();
+        EmbedBuilder embed = EmbedBuilders.createBuilder(PURPLE);
         embed.setTitle(":cat: Meowww!");
-        embed.setColor(Colors.PURPLE);
 
         JSONObject JSONObject = json.getJSONObject(0);
         String catImage = JSONObject.getString("url");
         embed.setImage(catImage);
-        ctx.getEvent().deferReply().addEmbeds(embed.build()).queue();
+        ctx.replyEmbed(embed.build());
     }
 
 
