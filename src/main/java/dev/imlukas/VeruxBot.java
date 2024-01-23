@@ -4,22 +4,22 @@ import dev.imlukas.database.json.JSONFileHandler;
 import dev.imlukas.listeners.EnterLeaveListener;
 import dev.imlukas.listeners.GuildJoinReadyListener;
 import dev.imlukas.listeners.SlashCommandListener;
-import dev.imlukas.slashcommands.SlashCommandManager;
-import dev.imlukas.slashcommands.commands.admin.AdminCommand;
-import dev.imlukas.slashcommands.commands.admin.PreferencesCommand;
-import dev.imlukas.slashcommands.commands.admin.listener.AutoCompleteListener;
-import dev.imlukas.slashcommands.commands.fun.CatCommand;
-import dev.imlukas.slashcommands.commands.fun.DogCommand;
-import dev.imlukas.slashcommands.commands.fun.RockPaperScissorCommand;
-import dev.imlukas.slashcommands.commands.member.AvatarCommand;
-import dev.imlukas.slashcommands.commands.member.BanSlashCommand;
-import dev.imlukas.slashcommands.commands.member.UnbanSlashCommand;
-import dev.imlukas.slashcommands.commands.music.*;
-import dev.imlukas.slashcommands.commands.others.git.GitHubCommand;
-import dev.imlukas.slashcommands.commands.server.RolesCommand;
-import dev.imlukas.slashcommands.commands.server.ServerCommand;
-import dev.imlukas.slashcommands.commands.ticket.TicketCommand;
-import dev.imlukas.slashcommands.commands.ticket.listener.ButtonHandler;
+import dev.imlukas.util.command.SlashCommandManager;
+import dev.imlukas.commands.admin.AdminCommand;
+import dev.imlukas.commands.admin.PreferencesCommand;
+import dev.imlukas.commands.admin.listener.AutoCompleteListener;
+import dev.imlukas.commands.fun.CatCommand;
+import dev.imlukas.commands.fun.DogCommand;
+import dev.imlukas.commands.fun.RockPaperScissorCommand;
+import dev.imlukas.commands.member.AvatarCommand;
+import dev.imlukas.commands.member.BanSlashCommand;
+import dev.imlukas.commands.member.UnbanSlashCommand;
+import dev.imlukas.commands.music.*;
+import dev.imlukas.commands.others.git.GitHubCommand;
+import dev.imlukas.commands.server.RolesCommand;
+import dev.imlukas.commands.server.ServerCommand;
+import dev.imlukas.commands.ticket.TicketCommand;
+import dev.imlukas.commands.ticket.listener.ButtonHandler;
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -31,8 +31,8 @@ import se.michaelthelin.spotify.SpotifyApi;
 
 import javax.security.auth.login.LoginException;
 
-import static dev.imlukas.config.secrets.DISCORD_TOKEN;
-import static dev.imlukas.config.secrets.SPOTIFY_TOKEN;
+import static dev.imlukas.secrets.DISCORD_TOKEN;
+import static dev.imlukas.secrets.SPOTIFY_TOKEN;
 
 @Getter
 public class VeruxBot {

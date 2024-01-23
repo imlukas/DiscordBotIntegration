@@ -2,8 +2,8 @@ package dev.imlukas.listeners;
 
 import dev.imlukas.VeruxBot;
 import dev.imlukas.database.json.JSONFileHandler;
-import dev.imlukas.slashcommands.CommandType;
-import dev.imlukas.slashcommands.SlashCommandManager;
+import dev.imlukas.util.command.CommandType;
+import dev.imlukas.util.command.SlashCommandManager;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
