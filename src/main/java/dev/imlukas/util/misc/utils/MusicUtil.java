@@ -22,6 +22,6 @@ public class MusicUtil {
     public static boolean isTooLong(AudioTrack track) {
         double duration = (track.getInfo().length / 1000d);
         int minutes = (int) (duration / 60d);
-        return minutes > 10;
+        return minutes > 240;
     }
 }

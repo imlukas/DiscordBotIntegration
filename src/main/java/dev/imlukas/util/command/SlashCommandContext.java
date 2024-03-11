@@ -22,6 +22,6 @@ public class SlashCommandContext implements ISlashCommandCtx {
     }
 
     public void replyEmbed(MessageEmbed embed) {
-        this.getEvent().replyEmbeds(embed).queue();
+        getEvent().replyEmbeds(embed).queue();
     }
 }

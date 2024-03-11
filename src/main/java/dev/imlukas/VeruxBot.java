@@ -1,6 +1,7 @@
 package dev.imlukas;
 
 import dev.imlukas.database.json.JSONFileHandler;
+import dev.imlukas.listeners.AutoDisconnectListener;
 import dev.imlukas.listeners.EnterLeaveListener;
 import dev.imlukas.listeners.GuildJoinReadyListener;
 import dev.imlukas.listeners.SlashCommandListener;
@@ -57,6 +58,7 @@ public class VeruxBot {
                 .addEventListeners(
                         new ButtonHandler(),
                         new EnterLeaveListener(this),
+                        new AutoDisconnectListener(),
                         new GuildJoinReadyListener(this),
                         new SlashCommandListener(this),
                         new AutoCompleteListener(this))

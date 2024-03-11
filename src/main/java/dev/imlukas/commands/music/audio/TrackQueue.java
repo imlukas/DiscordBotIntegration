@@ -14,7 +14,6 @@ public class TrackQueue extends AudioEventAdapter {
 
     public TrackQueue(AudioPlayer audioPlayer) {
         this.player = audioPlayer;
-        this.player.addListener(this);
     }
 
     /**

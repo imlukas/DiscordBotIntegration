@@ -7,12 +7,14 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import dev.imlukas.commands.music.audio.LoadHandler;
 import dev.imlukas.util.command.SlashCommandContext;
 import dev.imlukas.util.misc.utils.EmbedBuilders;
 import dev.imlukas.util.misc.utils.MusicUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.InteractionHook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,61 +43,7 @@ public class PlayerManager {
 
     public void loadAndPlay(TextChannel textChannel, SlashCommandContext context, String trackUrl) {
         GuildMusicManager musicManager = this.getMusicManager(textChannel.getGuild());
-
-        this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
-            private final EmbedBuilder embedBuilder = EmbedBuilders.getMusicEmbed();
-
-            @Override
-            public void trackLoaded(AudioTrack audioTrack) {
-                String formattedTime = MusicUtil.getFormattedDuration(audioTrack);
-
-                if (MusicUtil.isTooLong(audioTrack)) {
-                    embedBuilder.setTitle("[Error] Track too long");
-                    embedBuilder.setDescription("The track you tried to load is longer than 10 minutes");
-                    context.replyEmbed(embedBuilder.build());
-                    return;
-                }
-
-                musicManager.getTrackQueue().queue(audioTrack);
-                embedBuilder.setTitle("[Success] Track loaded");
-                embedBuilder.setDescription("Title: " + audioTrack.getInfo().title);
-                embedBuilder.addField("", "Duration: " + formattedTime + " Minutes", false);
-
-                context.replyEmbed(embedBuilder.build());
-            }
-
-            @Override
-            public void playlistLoaded(AudioPlaylist audioPlaylist) {
-                if (audioPlaylist.isSearchResult()) {
-                    trackLoaded(audioPlaylist.getTracks().get(0));
-                    return;
-                }
-
-                for (AudioTrack track : audioPlaylist.getTracks()) {
-                    musicManager.getTrackQueue().queue(track);
-                }
-
-                embedBuilder.setTitle("[Success] Playlist loaded");
-                embedBuilder.setDescription(audioPlaylist.getName());
-                embedBuilder.addField("", "Tracks: " + audioPlaylist.getTracks().size(), false);
-
-                context.replyEmbed(embedBuilder.build());
-            }
-
-            @Override
-            public void noMatches() {
-                embedBuilder.setTitle("[Error] No matches found");
-                embedBuilder.setDescription("No matches found for the given query");
-
-                context.replyEmbed(embedBuilder.build());
-            }
-
-            @Override
-            public void loadFailed(FriendlyException e) {
-                System.err.println("Could not play music: " + e.getMessage());
-            }
-
-        });
+        this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new LoadHandler(context, musicManager));
     }
 
     public static PlayerManager getInstance() {
